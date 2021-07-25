@@ -5,8 +5,7 @@
 #include <gtest/gtest.h>
 #include <list>
 
-std::list<int> sequential_quick_sort(std::list<int> input);
-
+#include <parallel_quick_sort.h>
 
 // Demonstrate some basic assertions.
 TEST(HelloTest, BasicAssertions) {
