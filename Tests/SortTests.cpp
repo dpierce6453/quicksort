@@ -6,6 +6,7 @@
 #include <list>
 
 #include <parallel_quick_sort.h>
+#include <random>
 
 // Demonstrate some basic assertions.
 TEST(HelloTest, BasicAssertions) {
@@ -22,5 +23,16 @@ TEST(QuickSortTests, FirstTest)
 
     std::list<int> answer = sequential_quick_sort(unsortedlist);
     ASSERT_TRUE(std::equal(sortedlist.begin(), sortedlist.end(), answer.begin()));
+}
 
+TEST(QuickSortTests, LongTest)
+{
+    std::random_device rd;
+    std::list<double> doubles(20000);
+    for (auto &d : doubles) {
+        d = static_cast<double>(rd());
+    }
+    auto seq = sequential_quick_sort(doubles);
+    auto par = parallel_quick_sort(doubles);
+    ASSERT_TRUE(std::equal(seq.begin(), seq.end(), par.begin()));
 }

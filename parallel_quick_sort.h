@@ -17,7 +17,7 @@ std::list<T> sequential_quick_sort(std::list<T> input)
 		return input;
 	}
 
-	//move frist element in the list to result list and take it as pivot value
+	//move first element in the list to result list and take it as pivot value
 	std::list<T> result;
 	result.splice(result.begin(), input, input.begin());
 	T pivot = *result.begin();
@@ -33,7 +33,7 @@ std::list<T> sequential_quick_sort(std::list<T> input)
 	std::list<T> lower_list;
 	lower_list.splice(lower_list.end(), input, input.begin(), divide_point);
 
-	//call the sequenctial_quick_sort recursively
+	//call the sequential_quick_sort recursively
 	auto new_lower(sequential_quick_sort(std::move(lower_list)));
 	auto new_upper(sequential_quick_sort(std::move(input)));
 
@@ -68,9 +68,9 @@ std::list<T> parallel_quick_sort(std::list<T> input)
 	std::list<T> lower_list;
 	lower_list.splice(lower_list.end(), input, input.begin(), divide_point);
 
-	auto new_lower(parallel_quick_sort(std::move(lower_list)));
 	//auto new_upper(sequential_quick_sort(std::move(input)));
 	std::future<std::list<T>> new_upper_future(std::async(&parallel_quick_sort<T>, std::move(input)));
+	auto new_lower(parallel_quick_sort(std::move(lower_list)));
 
 	result.splice(result.begin(), new_lower);
 	result.splice(result.end(), new_upper_future.get());
